@@ -1,20 +1,15 @@
 @extends('layouts.AdminPanel')
 
 @section('body')
-<div>
-    <h1 class="text-center mb-4">All News</h1>
 
-</div>
-<div class="container mt-5">
+<div class="container mt-2">
     <div class="row">
         @foreach ($posts as $post)
-            <div class="col-md-3 mb-2">
+            <div class="col-md-3 mt-1 mb-1">
                 <div class="card shadow-sm border-light rounded">
-                    <!-- Card Image -->
                     <img class="card-img-top" src="{{ asset($post->image) }}" alt="Post Image"
                         style="height: 150px; object-fit: cover;">
 
-                    <!-- Card Body -->
                     <div class="card-body">
                         <h5 class="card-title">{{ $post->title }}</h5>
                         <p class="card-text">
@@ -27,7 +22,6 @@
                         </p>
                     </div>
 
-                    <!-- Card Footer -->
                     <div class="card-footer text-center">
                         <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-primary">Update</a>
                         <a href="{{ route('posts.destroy', $post->id) }}" class="btn btn-sm btn-danger"
@@ -35,12 +29,16 @@
                         <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-info">View</a>
                     </div>
 
-                    <!-- Actions -->
-                    <div class="text-center my-3">
-                        <a href="{{ route('posts.like', $post->id) }}" class="btn btn-outline-primary btn-sm">
-                            <i class="fa fa-thumbs-up"></i> Like
-                        </a>
-                    </div>
+                    @if($button === 'yes')
+                        <div class="text-center my-3">
+                            <a id="likeButton" href="{{ route('posts.like', $post->id) }}"
+                                class="btn btn-outline-primary btn-sm">
+                                <i class="fa fa-thumbs-up"></i> Like
+                            </a>
+                        </div>
+                    @elseif($button === 'no')
+                        <p>ALready liked</p>
+                    @endif
 
                     <div class="text-center mb-3">
                         @if ($post->status === 'Active')
@@ -53,5 +51,8 @@
             </div>
         @endforeach
     </div>
+    {{ $posts->links() }}
+
 </div>
+
 @endsection

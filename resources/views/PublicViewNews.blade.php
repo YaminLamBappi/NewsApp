@@ -12,6 +12,7 @@
 
 <body>
     <div class="container mt-5">
+
         <div class="card shadow-lg">
             <div class="card-header text-center">
                 <h1>{{ $post->title }}</h1>

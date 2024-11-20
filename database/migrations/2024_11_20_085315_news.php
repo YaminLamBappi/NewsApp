@@ -8,29 +8,26 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('image');
-            $table->enum('status', ['Active', 'Inactive']);
+            $table->string('image')->nullable();
+            $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->integer('likes')->default(0);
             $table->integer('views')->default(0);
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
 
-
-            $table->foreignId('category_id')->constrained('category')->onDelete('cascade');
-
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('news');
     }
+
 };

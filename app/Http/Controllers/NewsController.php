@@ -5,22 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\News;
+use Illuminate\View\View;
+
 use Illuminate\Database\Eloquent\Collection;
 class NewsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $posts = News::with('category')->get();
-        return view("newsapp/NewsList", compact("posts"));
+
+        $posts = News::with('category')->paginate(8);
+        $button = 'yes';
+        return view("newsapp/NewsList", compact("posts", "button"));
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         $categories = Category::all();
@@ -28,9 +27,7 @@ class NewsController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -58,9 +55,7 @@ class NewsController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show($id)
     {
         $post = News::findOrFail($id);
@@ -79,9 +74,6 @@ class NewsController extends Controller
         return view('newsapp/UpdateNews', compact('post', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -110,9 +102,6 @@ class NewsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $post = News::findOrFail($id);
@@ -121,14 +110,22 @@ class NewsController extends Controller
         return redirect()->route('NewsList');
         //
     }
+
+    private function LikeButton($value)
+    {
+        return $value;
+
+    }
     public function like($id)
     {
-        //
+        $post = News::findOrFail($id);
+        $post->increment('likes');
+
+        $button = 'no';
+
+        return redirect()->route('NewsList', compact("button"));
     }
-    public function view($id)
-    {
-        //
-    }
+
     public function active($id)
     {
         $post = News::findOrFail($id);
@@ -150,7 +147,7 @@ class NewsController extends Controller
 
     public function public_view()
     {
-        $posts = News::with('category')->where('status', 'Active')->get();
+        $posts = News::with('category')->where('status', 'Active')->paginate(8);
         return view("welcome", compact("posts"));
     }
 

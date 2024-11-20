@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <a href="{{ route('login') }}">Login As Admin</a>
 
     <div>
         <h1 class="text-center mb-4">All News</h1>
@@ -56,6 +57,8 @@
                 </div>
             @endforeach
         </div>
+        {{ $posts->links() }}
+
     </div>
 
 </body>

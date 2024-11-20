@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\News;
+
 class CategoryController extends Controller
 {
 
     public function show()
     {
-        $categories = Category::all();
-
-        return view('newsapp/CategoryList', compact('categories'));
+        $countNews = Category::withCount('news')->get();
+        // dd($countNews);
+        return view('newsapp/CategoryList', compact('countNews'));
     }
     public function CategoryForm()
     {
@@ -50,6 +52,9 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
+
+        $post = $category->news();
+        $post->delete();
         $category->delete();
         return redirect()->route("CategoryList");
     }

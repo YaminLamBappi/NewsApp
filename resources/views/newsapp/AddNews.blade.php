@@ -2,19 +2,17 @@
 
 @section('body')
 
-<h1>Add News</h1>
+
 <div class="container">
     <div class="row">
-        <div class="col-md-8 offset-2 mt-5">
+        <div class="col-md-10 offset-1 mt-1">
             <div class="card">
-                <div class="card-header bg-info">
-                </div>
                 <div class="card-body">
                     <form method="post" action="{{ route('AddNews') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label>Title</label>
-                            <input type="text" name="title" class="form-control" />
+                            <input value="{{ old('title') }}" type="text" name="title" class="form-control" />
                             @error('title')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -22,31 +20,34 @@
 
                         <div class="form-group">
                             <label><strong>Description :</strong></label>
-                            <textarea id="summernote" name="description"></textarea>
+                            <textarea id="summernote" name="description">{{ old('description') }}</textarea>
                             @error('description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input value="{{ old('image') }}" type="file" name="image">
+                            @error('image')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                        <label for="image">Image</label>
-                        <input type="file" name="image">
-                        @error('image')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
+                        <div class="form-group">
+                            <label for="cars">Choose category:</label>
+                            <select name="category_id" class="form-control col-md-3">
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                        <label for="cars">Choose category:</label>
-
-                        <select name="category_id" class="form-control">
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('category_id')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
 
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-success btn-sm">ADD</button>
+                            <button type="submit" class="btn btn-success btn-lg">ADD</button>
                         </div>
                     </form>
                 </div>

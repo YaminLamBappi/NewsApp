@@ -39,7 +39,7 @@ Route::get('/delete/category/{id}', [CategoryController::class, 'destroy'])->nam
 
 
 
-Route::get('/news/list', [NewsController::class, 'index'])->name('NewsList');
+Route::get('/news', [NewsController::class, 'index'])->name('NewsList');
 Route::get('/add/news', [NewsController::class, 'create'])->name('NewsForm');
 Route::post('/add/news', [NewsController::class, 'store'])->name('AddNews');
 

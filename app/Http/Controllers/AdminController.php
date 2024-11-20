@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -11,5 +11,6 @@ class AdminController extends Controller
     {
         return view("layouts/AdminPanel");
     }
+
 
 }

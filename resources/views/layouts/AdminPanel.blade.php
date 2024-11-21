@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard 3</title>
+  <title>AdminLTE 3 | AdminPanel 3</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -121,12 +121,13 @@
               <a href="{{ route('AdminPanel') }}" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                  Dashboard
+                  AdminPanel
                 </p>
               </a>
             </li>
             <li class="nav-item menu-closed">
               <a href="#" class="nav-link inactive">
+                <i class="nav-icon fas fa-book"></i>
                 <p>
                   Manage News
                   <i class="right fas fa-angle-left"></i>
@@ -149,7 +150,7 @@
             </li>
             <li class="nav-item menu-closed">
               <a href="#" class="nav-link inactive">
-
+                <i class="nav-icon fas fa-file"></i>
                 <p>
                   Manage Category
                   <i class="right fas fa-angle-left"></i>
@@ -171,22 +172,46 @@
 
               </ul>
             <li class="nav-item menu-closed">
-              <a href="{{ route('AdminPanel') }}" class="nav-link">
-                <i class="nav-icon"></i>
+              <a href="#" class="nav-link inactive">
+                <i class="nav-icon fas fa-tree"></i>
                 <p>
-                  Logout
+                  Manage Profile
+                  <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
-            </li>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('profile.edit')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Edit info</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('profile.update.view')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Update Password </p>
+                  </a>
+                </li>
+
+              </ul>
+
             <li class="nav-item menu-closed">
               <a href="{{ route('PublicView') }}" class="nav-link">
-                <i class="nav-icon"></i>
+                <i class="nav-icon far fa-circle text-warning"></i>
                 <p>
                   PublicView
                 </p>
               </a>
             </li>
 
+            <li class="nav-item menu-closed">
+              <a href="{{ route('logout') }}" class="nav-link">
+                <i class="nav-icon far fa-circle text-danger"></i>
+                <p>
+                  Logout
+                </p>
+              </a>
+            </li>
         </nav>
         <!-- /.sidebar-menu -->
       </div>
@@ -198,9 +223,10 @@
       <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
+          <div class="row mb-10">
+            <div class="col-sm-12">
 
+              @yield('body')
 
 
 
@@ -211,7 +237,6 @@
         </div><!-- /.container-fluid -->
       </div>
 
-      @yield('body')
 
       <!-- /.content-header -->
 
@@ -246,8 +271,8 @@
   <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
   <!-- AdminLTE for demo purposes -->
   <!-- <script src="{{asset('dist/js/demo.js')}}"></script> -->
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="{{asset('dist/js/pages/dashboard3.js')}}"></script>
+  <!-- AdminLTE AdminPanel demo (This is only for demo purposes) -->
+  <script src="{{asset('dist/js/pages/AdminPanel3.js')}}"></script>
 </body>
 
 </html>

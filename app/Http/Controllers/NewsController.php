@@ -3,19 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Like;
 use Illuminate\Http\Request;
 use App\Models\News;
-use Illuminate\View\View;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 use Illuminate\Database\Eloquent\Collection;
 class NewsController extends Controller
 {
     public function index()
     {
-
         $posts = News::with('category')->paginate(8);
-        $button = 'yes';
-        return view("newsapp/NewsList", compact("posts", "button"));
+
+        $total_like = [];
+
+        foreach ($posts as $post) {
+            $total_like[$post->id] = Like::with('news')->where('news_id', $post->id)->count();
+
+        }
+        ;
+
+
+        return view("newsapp/NewsList", compact("posts", 'total_like'));
         //
     }
 
@@ -62,7 +73,13 @@ class NewsController extends Controller
         $post->views += 1;
         $post->save();
 
-        return view('newsapp/ViewNews', compact('post'));
+        $user = Auth::user();
+
+        $likeable = Like::where("user_id", $user->id)->where("news_id", $post->id)->count();
+
+        $total_like = Like::with('news')->where('news_id', $id)->count();
+
+        return view('newsapp/ViewNews', compact('post', 'total_like', 'likeable'));
 
         //
     }
@@ -121,9 +138,8 @@ class NewsController extends Controller
         $post = News::findOrFail($id);
         $post->increment('likes');
 
-        $button = 'no';
 
-        return redirect()->route('NewsList', compact("button"));
+        return redirect()->back();
     }
 
     public function active($id)
@@ -148,7 +164,17 @@ class NewsController extends Controller
     public function public_view()
     {
         $posts = News::with('category')->where('status', 'Active')->paginate(8);
-        return view("welcome", compact("posts"));
+
+        $total_like = [];
+
+        foreach ($posts as $post) {
+            $total_like[$post->id] = Like::with('news')->where('news_id', $post->id)->count();
+
+        }
+        ;
+
+
+        return view("welcome", compact("posts", "total_like"));
     }
 
     public function public_single_view($id)

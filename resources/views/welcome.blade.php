@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <a href="{{ route('login') }}">Login As Admin</a>
+    <a class="btn btn-info" href="{{ route('login') }}">Login As Admin</a>
 
     <div>
         <h1 class="text-center mb-4">All News</h1>
@@ -31,7 +31,8 @@
                             <h5 class="card-title">{{ $post->title }}</h5>
                             <p class="card-text">
                                 <strong>Category:</strong> {{ $post->category->name }}<br>
-                                <strong>Likes:</strong> {{ $post->likes }} | <strong>Views:</strong> {{ $post->views }}<br>
+                                <strong>Likes:</strong> {{ $total_like[$post->id] ?? 0 }}<br>
+                                <strong>Views:</strong> {{ $post->views }}<br>
                                 <strong>Status:</strong>
                                 <span class="badge {{ $post->status === 'Active' ? 'badge-success' : 'badge-secondary' }}">
                                     {{ $post->status }}
@@ -45,12 +46,7 @@
                             <a href="{{ route('posts.view.public', $post->id) }}" class="btn btn-sm btn-info">View</a>
                         </div>
 
-                        <!-- Actions -->
-                        <div class="text-center my-3">
-                            <a href="{{ route('posts.like', $post->id) }}" class="btn btn-outline-primary btn-sm">
-                                <i class="fa fa-thumbs-up"></i> Like
-                            </a>
-                        </div>
+
 
 
                     </div>

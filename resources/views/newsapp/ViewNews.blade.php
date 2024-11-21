@@ -21,7 +21,31 @@
         </div>
         <div class="card-footer d-flex justify-content-between">
             <div>
-                <h6><strong>Likes:</strong> {{ $post->likes }}</h6>
+                @if($likeable > 0)
+                    <form method="post" action="{{ route('store.unlike', ['newsId' => $post->id]) }}">
+
+                        @csrf
+                        <div class="text-center my-3">
+
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                <i class="fa fa-thumbs-up"></i> Unlike
+                            </button>
+                        </div>
+                    </form>
+                @else
+                    <form method="post"
+                        action="{{ route('store.like', ['userId' => Auth::user()->id, 'newsId' => $post->id]) }}">
+                        @csrf
+                        <div class="text-center my-3">
+
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                <i class="fa fa-thumbs-up"></i> Like
+                            </button>
+                        </div>
+                    </form>
+
+                @endif
+                <h6><strong>Likes:</strong> {{ $total_like }}</h6>
                 <h6><strong>Views:</strong> {{ $post->views }}</h6>
             </div>
         </div>

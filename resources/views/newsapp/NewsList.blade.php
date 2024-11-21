@@ -14,7 +14,8 @@
                         <h5 class="card-title">{{ $post->title }}</h5>
                         <p class="card-text">
                             <strong>Category:</strong> {{ $post->category->name }}<br>
-                            <strong>Likes:</strong> {{ $post->likes }} | <strong>Views:</strong> {{ $post->views }}<br>
+                            <strong>Likes:</strong> {{ $total_like[$post->id] ?? 0 }} <br>
+                            <strong>Views:</strong> {{ $post->views }}<br>
                             <strong>Status:</strong>
                             <span class="badge {{ $post->status === 'Active' ? 'badge-success' : 'badge-secondary' }}">
                                 {{ $post->status }}
@@ -29,16 +30,8 @@
                         <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-info">View</a>
                     </div>
 
-                    @if($button === 'yes')
-                        <div class="text-center my-3">
-                            <a id="likeButton" href="{{ route('posts.like', $post->id) }}"
-                                class="btn btn-outline-primary btn-sm">
-                                <i class="fa fa-thumbs-up"></i> Like
-                            </a>
-                        </div>
-                    @elseif($button === 'no')
-                        <p>ALready liked</p>
-                    @endif
+
+
 
                     <div class="text-center mb-3">
                         @if ($post->status === 'Active')
